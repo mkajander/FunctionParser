@@ -10,26 +10,63 @@ public class FunctionParser
         
     }
 
-    public Decimal Parse(string input)
+    public bool StringContainsOnlyOperatorsOrNumbers(string input)
     {
-        Decimal result = 0;
-        // Check if input is empty
+        // Check if the string contains only operators or numbers or spaces
+        foreach (char c in input)
+        {
+            if (!char.IsDigit(c) && !char.IsWhiteSpace(c) && !operators.Contains(c.ToString()))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void ValidateInput(string input)
+    {
         if (input == "")
         {
             throw new System.ArgumentException("Input is empty");
-        }
-        // Check if input is a number
-        if (Decimal.TryParse(input, out result))
-        {
-            return result;
         }
         // check if input contains any operators
         if (!operators.Any(input.Contains))
         {
             throw new System.ArgumentException("Input does not contain any operators");
         }
+        // Check if input contains only operators or numbers
+        if (!StringContainsOnlyOperatorsOrNumbers(input))
+        {
+            throw new System.ArgumentException("Input contains invalid characters");
+        }
+    }
+
+    public Decimal Parse(string input)
+    {
+        ValidateInput(input);
+        Decimal result = 0;
+        // Check if input is a number
+        if (Decimal.TryParse(input, out result))
+        {
+            return result;
+        }
+        var tokens = Tokenize(input);
+        // Calculate the result
+        result = Calculate(tokens);
+        return result;
+    }
+
+    private List<string> Tokenize(string input)
+    {
         // split input into tokens by operators but include the delimiter
         List<string> tokens = SplitAndKeepDelimiters(input, operators).ToList();
+        ValidateTokens(tokens);
+        return tokens;
+    }
+
+    private void ValidateTokens(List<string> tokens)
+    {
+        Decimal result = 0;
         // ensure that every second token is a number
         for (int i = 0; i < tokens.Count; i += 2)
         {
@@ -46,11 +83,6 @@ public class FunctionParser
                 throw new System.ArgumentException("Function format is invalid");
             }
         }
-        
-        // Calculate the result
-        result = Calculate(tokens);
-        return result;
-
     }
 
     private decimal Calculate(List<string> tokens)
@@ -108,7 +140,22 @@ public class FunctionParser
     }
         
         
-    
+    public Decimal Parse(string input, Dictionary<string, Decimal> replaceValues)
+    {
+        // replace values in the input then call parse
+        foreach (KeyValuePair<string, Decimal> kvp in replaceValues)
+        {
+            input = input.Replace(kvp.Key, kvp.Value.ToString());
+        }
+        // check that the input is not empty
+        if (input == "")
+        {
+            throw new System.ArgumentException("Input is empty");
+        }
+        // validate the input
+        ValidateInput(input);
+        return Parse(input);
+    }
 
 
     public static IList<string> SplitAndKeepDelimiters(string input, string[] operators)
@@ -135,6 +182,6 @@ public class FunctionParser
         {
             tokens.Add(token);
         }
-        return tokens;
+        return tokens.Select(x => x.Trim()).ToList();
     }
 }

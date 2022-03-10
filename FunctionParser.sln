@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunctionParser", "FunctionParser\FunctionParser.csproj", "{7E4FA9B2-6A20-4B40-B228-F441D2D10357}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunctionParser.Tests", "FunctionParser.Tests\FunctionParser.Tests.csproj", "{7B2C05AB-4CAE-4EB4-90D1-6F950B58B81C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{7E4FA9B2-6A20-4B40-B228-F441D2D10357}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E4FA9B2-6A20-4B40-B228-F441D2D10357}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E4FA9B2-6A20-4B40-B228-F441D2D10357}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B2C05AB-4CAE-4EB4-90D1-6F950B58B81C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B2C05AB-4CAE-4EB4-90D1-6F950B58B81C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B2C05AB-4CAE-4EB4-90D1-6F950B58B81C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B2C05AB-4CAE-4EB4-90D1-6F950B58B81C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
